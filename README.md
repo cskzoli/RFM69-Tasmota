@@ -10,6 +10,7 @@ Currently it is a dirty solution as using hard coded pin configuration.
 
 Pin configuration ESP-12F     ->    RFM69
                   IO12        ->    MISO
+                  
                   IO13        ->    MOSI
                   IO14        ->    SCLK
                   IO15        ->    NSS (CS)
