@@ -13,9 +13,9 @@
 #define ENCRYPTKEY       "sampleEncryptKey" //same 16 characters on all nodes, comment this line to disable encryption
 //#define IS_RFM69HW_HCW   //uncomment only for RFM69HW/HCW! Leave out if you have RFM69W/CW!
 //*********************************************************************************************
-#define ENABLE_ATC       //comment out this line to disable AUTO TRANSMISSION CONTROL
-#define ATC_RSSI         -80
-#define ACK_TIME       60 
+//#define ENABLE_ATC       //comment out this line to disable AUTO TRANSMISSION CONTROL
+//#define ATC_RSSI         -80
+//#define ACK_TIME       60 
 //*********************************************************************************************
   #define DEBUG(input)   Serial.println(input)
 AM2320_asukiaaa mySensor;
@@ -33,17 +33,16 @@ int getBandgap(void);
   
 void setup(void)
     {
-     //pinMode(A3, OUTPUT);
-     //digitalWrite(A3, HIGH); 
+  
      Serial.begin(115200);
-     //Serial.print("volts X 100");
+     
      Serial.println( "\r\n\r\n" );
      radio.initialize(FREQUENCY,NODEID,NETWORKID); 
      radio.encrypt(ENCRYPTKEY);
      //radio.enableAutoPower(ATC_RSSI);
-     //radio.readAllRegs();
+     
      radio.sleep();
-     Serial.println("interrupt pin: " + String(RF69_IRQ_PIN) );
+     //Serial.println("interrupt pin: " + String(RF69_IRQ_PIN) );
      Wire.begin();
      mySensor.setWire(&Wire);
      delay(100);
@@ -67,15 +66,11 @@ void loop(void)
 
   
      battVolts=getBandgap();  //Determins what actual Vcc is, (X 100), based on known bandgap voltage
-     //Serial.print("Battery Vcc volts =  ");
-     //Serial.println(battVolts);
-     //wakeup (must reinit)
-     //radio.RFM69::initialize(FREQUENCY,NODEID,NETWORKID);  //call base init!
-     //radio.encrypt(ENCRYPTKEY);
+
 
      sprintf(buff, "C:%s;H:%s;B:%d;R:%d", stemp,shumi,battVolts,rssi);
      buffLen = strlen(buff);
-         DEBUG("Sending:"); DEBUG(buff);
+       DEBUG("Sending:"); DEBUG(buff);
      if (radio.sendWithRetry(GATEWAYID, buff, buffLen))
        DEBUG("ok!");
      else DEBUG("nok...");
